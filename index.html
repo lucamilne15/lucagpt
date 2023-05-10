@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LucaGPT</title>
+  </head>
+  <body>
+    <h1>LucaGPT</h1>
+    <div>
+      <label for="prompt">Enter a prompt:</label>
+      <input type="text" id="prompt" name="prompt">
+      <button onclick="sendPrompt()">Submit</button>
+    </div>
+    <div>
+      <p>Response:</p>
+      <p id="response"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.7.1"></script>
+    <script>
+      const openai = new OpenAI("3Mz9TPOCNcHdM3cBPvksT3BlbkFJxOhdE5EACxzuDq7jqc4D");
+
+      function sendPrompt() {
+        const prompt = document.getElementById("prompt").value;
+        openai.complete({
+          engine: "text-davinci-002",
+          prompt: prompt,
+          max_tokens: 100,
+          n: 1,
+          stop: "\n",
+        }).then((response) => {
+          const text = response.choices[0].text;
+          document.getElementById("response").innerText = text;
+        });
+      }
+    </script>
+  </body>
+</html>
